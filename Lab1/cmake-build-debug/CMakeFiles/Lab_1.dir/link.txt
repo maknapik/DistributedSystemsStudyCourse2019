@@ -1,0 +1,1 @@
+/usr/bin/cc -g   CMakeFiles/Lab_1.dir/TCP.c.o CMakeFiles/Lab_1.dir/pau.c.o CMakeFiles/Lab_1.dir/net.c.o CMakeFiles/Lab_1.dir/my.c.o  -o Lab_1 

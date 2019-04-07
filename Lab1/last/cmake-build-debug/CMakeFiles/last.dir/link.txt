@@ -1,0 +1,1 @@
+/usr/bin/cc -g   CMakeFiles/last.dir/main.c.o  -o last -lpthread 

@@ -1,0 +1,16 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/mateusz/Documents/Semester VI/Rozprochy/Lab 1/TCP.c
+stdio.h
+-
+stdlib.h
+-
+sys/socket.h
+-
+
