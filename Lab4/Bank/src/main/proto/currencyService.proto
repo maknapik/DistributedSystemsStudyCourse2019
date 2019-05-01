@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "service";
+
+package service;
+
+enum Currency {
+    UNKNOWN = 0;
+    PLN = 1;
+    EUR = 2;
+    USD = 3;
+    CHF = 4;
+}
+
+message ExchangeRateRequest {
+    Currency baseCurrency = 1;
+    repeated Currency foreignCurrencies = 2;
+}
+
+message ExchangeRateResponse {
+    Currency currency = 1;
+    double purchase = 2;
+    double sale = 3;
+}
+
+message ExchangeRateSequence {
+    repeated ExchangeRateResponse exchangeRateResponse = 1;
+}
+
+service CurrencyService {
+    rpc subscribe (ExchangeRateRequest) returns (stream ExchangeRateSequence) {}
+}
