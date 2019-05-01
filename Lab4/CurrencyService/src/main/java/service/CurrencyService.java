@@ -6,6 +6,8 @@ import io.grpc.stub.StreamObserver;
 
 import java.io.IOException;
 
+import static io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall;
+
 public class CurrencyService {
 
     static public void main(String [] args) throws IOException, InterruptedException {
@@ -57,6 +59,18 @@ public class CurrencyService {
             }
 
             return builder.build();
+        }
+
+        @Override
+        public void baseCurrency(ExchangeRateRequest request, StreamObserver<ExchangeRateResponse> responseObserver) {
+            Currency baseCurrency = request.getBaseCurrency();
+
+            responseObserver.onNext(ExchangeRateResponse.newBuilder()
+                    .setCurrency(baseCurrency)
+                    .setPurchase(currencyValuesProvider.getCurrencyPurhchaseValue(baseCurrency))
+                    .setSale(currencyValuesProvider.getCurrencySaleValue(baseCurrency))
+                    .build());
+            responseObserver.onCompleted();
         }
 
     }

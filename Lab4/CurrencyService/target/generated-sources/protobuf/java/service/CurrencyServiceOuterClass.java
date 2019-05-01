@@ -47,7 +47,9 @@ public final class CurrencyServiceOuterClass {
       "xchangeRateSequence\022;\n\024exchangeRateRespo" +
       "nse\030\001 \003(\0132\035.service.ExchangeRateResponse" +
       "*;\n\010Currency\022\013\n\007UNKNOWN\020\000\022\007\n\003PLN\020\001\022\007\n\003EU" +
-      "R\020\002\022\007\n\003USD\020\003\022\007\n\003CHF\020\0042_\n\017CurrencyService" +
+      "R\020\002\022\007\n\003USD\020\003\022\007\n\003CHF\020\0042\256\001\n\017CurrencyServic" +
+      "e\022M\n\014baseCurrency\022\034.service.ExchangeRate" +
+      "Request\032\035.service.ExchangeRateResponse\"\000" +
       "\022L\n\tsubscribe\022\034.service.ExchangeRateRequ" +
       "est\032\035.service.ExchangeRateSequence\"\0000\001B\013" +
       "\n\007serviceP\001b\006proto3"

@@ -5,6 +5,7 @@
 /home/mateusz/Documents/Semester VI/DistributedSystemsStudyCourse2019/Lab4/Bank/target/generated-sources/protobuf/java/service/ExchangeRateSequence.java
 /home/mateusz/Documents/Semester VI/DistributedSystemsStudyCourse2019/Lab4/Bank/target/generated-sources/protobuf/java/service/ExchangeRateResponseOrBuilder.java
 /home/mateusz/Documents/Semester VI/DistributedSystemsStudyCourse2019/Lab4/Bank/target/generated-sources/protobuf/java/service/ExchangeRateRequest.java
+/home/mateusz/Documents/Semester VI/DistributedSystemsStudyCourse2019/Lab4/Bank/src/main/java/currencyService/CurrencyReceiver.java
 /home/mateusz/Documents/Semester VI/DistributedSystemsStudyCourse2019/Lab4/Bank/target/generated-sources/protobuf/java/service/Currency.java
 /home/mateusz/Documents/Semester VI/DistributedSystemsStudyCourse2019/Lab4/Bank/target/generated-sources/protobuf/java/service/ExchangeRateRequestOrBuilder.java
 /home/mateusz/Documents/Semester VI/DistributedSystemsStudyCourse2019/Lab4/Bank/target/generated-sources/protobuf/java/service/ExchangeRateResponse.java

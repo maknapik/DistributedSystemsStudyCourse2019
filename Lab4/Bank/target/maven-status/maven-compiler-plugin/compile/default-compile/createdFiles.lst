@@ -5,6 +5,7 @@ service/Currency$1.class
 service/ExchangeRateSequence$Builder.class
 service/CurrencyServiceGrpc$CurrencyServiceFutureStub.class
 service/CurrencyServiceGrpc$CurrencyServiceBlockingStub.class
+currencyService/CurrencyReceiver.class
 service/ExchangeRateResponse$Builder.class
 service/CurrencyServiceGrpc$CurrencyServiceMethodDescriptorSupplier.class
 service/CurrencyServiceGrpc$CurrencyServiceFileDescriptorSupplier.class

@@ -29,5 +29,6 @@ message ExchangeRateSequence {
 }
 
 service CurrencyService {
+    rpc baseCurrency (ExchangeRateRequest) returns (ExchangeRateResponse) {}
     rpc subscribe (ExchangeRateRequest) returns (stream ExchangeRateSequence) {}
 }

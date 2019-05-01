@@ -24,9 +24,41 @@ public final class CurrencyServiceGrpc {
 
   private CurrencyServiceGrpc() {}
 
-  public static final String SERVICE_NAME = "service.CurrencyReceiver";
+  public static final String SERVICE_NAME = "service.CurrencyService";
 
   // Static method descriptors that strictly reflect the proto.
+  private static volatile io.grpc.MethodDescriptor<service.ExchangeRateRequest,
+      service.ExchangeRateResponse> getBaseCurrencyMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "baseCurrency",
+      requestType = service.ExchangeRateRequest.class,
+      responseType = service.ExchangeRateResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<service.ExchangeRateRequest,
+      service.ExchangeRateResponse> getBaseCurrencyMethod() {
+    io.grpc.MethodDescriptor<service.ExchangeRateRequest, service.ExchangeRateResponse> getBaseCurrencyMethod;
+    if ((getBaseCurrencyMethod = CurrencyServiceGrpc.getBaseCurrencyMethod) == null) {
+      synchronized (CurrencyServiceGrpc.class) {
+        if ((getBaseCurrencyMethod = CurrencyServiceGrpc.getBaseCurrencyMethod) == null) {
+          CurrencyServiceGrpc.getBaseCurrencyMethod = getBaseCurrencyMethod = 
+              io.grpc.MethodDescriptor.<service.ExchangeRateRequest, service.ExchangeRateResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(
+                  "service.CurrencyService", "baseCurrency"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  service.ExchangeRateRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  service.ExchangeRateResponse.getDefaultInstance()))
+                  .setSchemaDescriptor(new CurrencyServiceMethodDescriptorSupplier("baseCurrency"))
+                  .build();
+          }
+        }
+     }
+     return getBaseCurrencyMethod;
+  }
+
   private static volatile io.grpc.MethodDescriptor<service.ExchangeRateRequest,
       service.ExchangeRateSequence> getSubscribeMethod;
 
@@ -45,7 +77,7 @@ public final class CurrencyServiceGrpc {
               io.grpc.MethodDescriptor.<service.ExchangeRateRequest, service.ExchangeRateSequence>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
               .setFullMethodName(generateFullMethodName(
-                  "service.CurrencyReceiver", "subscribe"))
+                  "service.CurrencyService", "subscribe"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
                   service.ExchangeRateRequest.getDefaultInstance()))
@@ -88,6 +120,13 @@ public final class CurrencyServiceGrpc {
 
     /**
      */
+    public void baseCurrency(service.ExchangeRateRequest request,
+        io.grpc.stub.StreamObserver<service.ExchangeRateResponse> responseObserver) {
+      asyncUnimplementedUnaryCall(getBaseCurrencyMethod(), responseObserver);
+    }
+
+    /**
+     */
     public void subscribe(service.ExchangeRateRequest request,
         io.grpc.stub.StreamObserver<service.ExchangeRateSequence> responseObserver) {
       asyncUnimplementedUnaryCall(getSubscribeMethod(), responseObserver);
@@ -95,6 +134,13 @@ public final class CurrencyServiceGrpc {
 
     @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
       return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
+          .addMethod(
+            getBaseCurrencyMethod(),
+            asyncUnaryCall(
+              new MethodHandlers<
+                service.ExchangeRateRequest,
+                service.ExchangeRateResponse>(
+                  this, METHODID_BASE_CURRENCY)))
           .addMethod(
             getSubscribeMethod(),
             asyncServerStreamingCall(
@@ -126,6 +172,14 @@ public final class CurrencyServiceGrpc {
 
     /**
      */
+    public void baseCurrency(service.ExchangeRateRequest request,
+        io.grpc.stub.StreamObserver<service.ExchangeRateResponse> responseObserver) {
+      asyncUnaryCall(
+          getChannel().newCall(getBaseCurrencyMethod(), getCallOptions()), request, responseObserver);
+    }
+
+    /**
+     */
     public void subscribe(service.ExchangeRateRequest request,
         io.grpc.stub.StreamObserver<service.ExchangeRateSequence> responseObserver) {
       asyncServerStreamingCall(
@@ -149,6 +203,13 @@ public final class CurrencyServiceGrpc {
     protected CurrencyServiceBlockingStub build(io.grpc.Channel channel,
         io.grpc.CallOptions callOptions) {
       return new CurrencyServiceBlockingStub(channel, callOptions);
+    }
+
+    /**
+     */
+    public service.ExchangeRateResponse baseCurrency(service.ExchangeRateRequest request) {
+      return blockingUnaryCall(
+          getChannel(), getBaseCurrencyMethod(), getCallOptions(), request);
     }
 
     /**
@@ -177,9 +238,18 @@ public final class CurrencyServiceGrpc {
         io.grpc.CallOptions callOptions) {
       return new CurrencyServiceFutureStub(channel, callOptions);
     }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<service.ExchangeRateResponse> baseCurrency(
+        service.ExchangeRateRequest request) {
+      return futureUnaryCall(
+          getChannel().newCall(getBaseCurrencyMethod(), getCallOptions()), request);
+    }
   }
 
-  private static final int METHODID_SUBSCRIBE = 0;
+  private static final int METHODID_BASE_CURRENCY = 0;
+  private static final int METHODID_SUBSCRIBE = 1;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -198,6 +268,10 @@ public final class CurrencyServiceGrpc {
     @java.lang.SuppressWarnings("unchecked")
     public void invoke(Req request, io.grpc.stub.StreamObserver<Resp> responseObserver) {
       switch (methodId) {
+        case METHODID_BASE_CURRENCY:
+          serviceImpl.baseCurrency((service.ExchangeRateRequest) request,
+              (io.grpc.stub.StreamObserver<service.ExchangeRateResponse>) responseObserver);
+          break;
         case METHODID_SUBSCRIBE:
           serviceImpl.subscribe((service.ExchangeRateRequest) request,
               (io.grpc.stub.StreamObserver<service.ExchangeRateSequence>) responseObserver);
@@ -229,7 +303,7 @@ public final class CurrencyServiceGrpc {
 
     @java.lang.Override
     public com.google.protobuf.Descriptors.ServiceDescriptor getServiceDescriptor() {
-      return getFileDescriptor().findServiceByName("CurrencyReceiver");
+      return getFileDescriptor().findServiceByName("CurrencyService");
     }
   }
 
@@ -263,6 +337,7 @@ public final class CurrencyServiceGrpc {
         if (result == null) {
           serviceDescriptor = result = io.grpc.ServiceDescriptor.newBuilder(SERVICE_NAME)
               .setSchemaDescriptor(new CurrencyServiceFileDescriptorSupplier())
+              .addMethod(getBaseCurrencyMethod())
               .addMethod(getSubscribeMethod())
               .build();
         }

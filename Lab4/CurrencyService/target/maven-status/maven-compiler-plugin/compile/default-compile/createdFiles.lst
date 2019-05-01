@@ -21,6 +21,7 @@ service/ExchangeRateSequence$1.class
 service/CurrencyServiceGrpc$CurrencyServiceImplBase.class
 service/CurrencyService$CurrencyServiceImpl.class
 service/ExchangeRateRequest.class
+service/CurrencyValuesProvider.class
 service/CurrencyServiceGrpc$CurrencyServiceBaseDescriptorSupplier.class
 service/ExchangeRateRequest$2.class
 service/CurrencyService.class
