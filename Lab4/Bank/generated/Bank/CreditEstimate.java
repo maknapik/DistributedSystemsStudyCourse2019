@@ -18,7 +18,7 @@ package Bank;
 public class CreditEstimate implements java.lang.Cloneable,
                                        java.io.Serializable
 {
-    public double originCurrency;
+    public double nativeCurrency;
 
     public double foreignCurrency;
 
@@ -26,9 +26,9 @@ public class CreditEstimate implements java.lang.Cloneable,
     {
     }
 
-    public CreditEstimate(double originCurrency, double foreignCurrency)
+    public CreditEstimate(double nativeCurrency, double foreignCurrency)
     {
-        this.originCurrency = originCurrency;
+        this.nativeCurrency = nativeCurrency;
         this.foreignCurrency = foreignCurrency;
     }
 
@@ -46,7 +46,7 @@ public class CreditEstimate implements java.lang.Cloneable,
 
         if(r != null)
         {
-            if(this.originCurrency != r.originCurrency)
+            if(this.nativeCurrency != r.nativeCurrency)
             {
                 return false;
             }
@@ -65,7 +65,7 @@ public class CreditEstimate implements java.lang.Cloneable,
     {
         int h_ = 5381;
         h_ = com.zeroc.IceInternal.HashUtil.hashAdd(h_, "::Bank::CreditEstimate");
-        h_ = com.zeroc.IceInternal.HashUtil.hashAdd(h_, originCurrency);
+        h_ = com.zeroc.IceInternal.HashUtil.hashAdd(h_, nativeCurrency);
         h_ = com.zeroc.IceInternal.HashUtil.hashAdd(h_, foreignCurrency);
         return h_;
     }
@@ -86,13 +86,13 @@ public class CreditEstimate implements java.lang.Cloneable,
 
     public void ice_writeMembers(com.zeroc.Ice.OutputStream ostr)
     {
-        ostr.writeDouble(this.originCurrency);
+        ostr.writeDouble(this.nativeCurrency);
         ostr.writeDouble(this.foreignCurrency);
     }
 
     public void ice_readMembers(com.zeroc.Ice.InputStream istr)
     {
-        this.originCurrency = istr.readDouble();
+        this.nativeCurrency = istr.readDouble();
         this.foreignCurrency = istr.readDouble();
     }
 

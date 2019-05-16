@@ -11,7 +11,7 @@ public class CurrencyService {
 
     private HashMap<Currency, Pair<Double, Double>> currencyValues = new HashMap<>();
 
-    CurrencyService() {
+    public CurrencyService() {
         currencyValues.put(Currency.PLN, new Pair<>(0.0, 0.0));
         currencyValues.put(Currency.EUR, new Pair<>(0.0, 0.0));
         currencyValues.put(Currency.USD, new Pair<>(0.0, 0.0));

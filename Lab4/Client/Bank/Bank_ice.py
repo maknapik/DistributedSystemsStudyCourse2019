@@ -255,8 +255,8 @@ if 'Credentials' not in _M_Bank.__dict__:
 if 'CreditEstimate' not in _M_Bank.__dict__:
     _M_Bank.CreditEstimate = Ice.createTempClass()
     class CreditEstimate(object):
-        def __init__(self, originCurrency=0.0, foreignCurrency=0.0):
-            self.originCurrency = originCurrency
+        def __init__(self, nativeCurrency=0.0, foreignCurrency=0.0):
+            self.nativeCurrency = nativeCurrency
             self.foreignCurrency = foreignCurrency
 
         def __eq__(self, other):
@@ -265,7 +265,7 @@ if 'CreditEstimate' not in _M_Bank.__dict__:
             elif not isinstance(other, _M_Bank.CreditEstimate):
                 return NotImplemented
             else:
-                if self.originCurrency != other.originCurrency:
+                if self.nativeCurrency != other.nativeCurrency:
                     return False
                 if self.foreignCurrency != other.foreignCurrency:
                     return False
@@ -280,7 +280,7 @@ if 'CreditEstimate' not in _M_Bank.__dict__:
         __repr__ = __str__
 
     _M_Bank._t_CreditEstimate = IcePy.defineStruct('::Bank::CreditEstimate', CreditEstimate, (), (
-        ('originCurrency', (), IcePy._t_double),
+        ('nativeCurrency', (), IcePy._t_double),
         ('foreignCurrency', (), IcePy._t_double)
     ))
 
