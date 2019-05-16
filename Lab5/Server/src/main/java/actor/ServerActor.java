@@ -16,7 +16,7 @@ public class ServerActor extends AbstractActor {
                             System.out.println(String.format("Server's system path: %s", getSelf().path()));
                     }
                 })
-                .matchAny(object -> {})
+                .matchAny(object -> {System.out.println("Any");})
                 .build();
     }
 
