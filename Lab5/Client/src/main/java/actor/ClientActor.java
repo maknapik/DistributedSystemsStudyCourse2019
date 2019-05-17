@@ -1,6 +1,8 @@
 package actor;
 
 import akka.actor.AbstractActor;
+import model.OrderRequest;
+import model.OrderResponse;
 import model.SearchRequest;
 import model.SearchResponse;
 
@@ -20,6 +22,15 @@ public class ClientActor extends AbstractActor {
                             getContext()
                                     .actorSelection("akka.tcp://ServerSystem@127.0.0.1:2552/user/Server")
                                     .tell(searchRequest, getSelf());
+                            break;
+                        case ORDER:
+                            OrderRequest orderRequest = new OrderRequest();
+                            orderRequest.setTitle(parameters[1]);
+
+                            getContext()
+                                    .actorSelection("akka.tcp://ServerSystem@127.0.0.1:2552/user/Server")
+                                    .tell(orderRequest, getSelf());
+                            break;
                     }
 
                 })
@@ -29,6 +40,9 @@ public class ClientActor extends AbstractActor {
                     } else {
                         System.out.println("Price: " + searchResponse.getPrice());
                     }
+                })
+                .match(OrderResponse.class, searchResponse -> {
+                    System.out.println(searchResponse.getPayload());
                 })
                 .matchAny(object -> {
                 })

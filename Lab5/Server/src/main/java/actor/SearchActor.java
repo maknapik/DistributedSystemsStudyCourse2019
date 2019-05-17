@@ -27,4 +27,5 @@ public class SearchActor extends AbstractActor {
                 })
                 .build();
     }
+
 }

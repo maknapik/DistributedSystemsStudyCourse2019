@@ -4,6 +4,7 @@ import akka.actor.AbstractActor;
 import akka.actor.Props;
 import akka.routing.RoundRobinPool;
 import database.DatabaseService;
+import model.OrderRequest;
 import model.SearchRequest;
 
 public class ServerActor extends AbstractActor {
@@ -25,7 +26,9 @@ public class ServerActor extends AbstractActor {
                     System.out.println(String.format("Server's system path: %s", getSelf().path()));
             }
         }).match(SearchRequest.class, searchRequest -> {
-            getContext().child(ServerActor.class.getSimpleName()).get().tell(searchRequest, getSender());
+            getContext().child(SearchActor.class.getSimpleName()).get().tell(searchRequest, getSender());
+        }).match(OrderRequest.class, orderRequest -> {
+            getContext().child(OrderActor.class.getSimpleName()).get().tell(orderRequest, getSender());
         }).matchAny(object -> {
             System.out.println("Any");
         }).build();
@@ -34,7 +37,9 @@ public class ServerActor extends AbstractActor {
     @Override
     public void preStart() {
         context().actorOf(Props.create(SearchActor.class, databaseService).withRouter(new RoundRobinPool(10)),
-                ServerActor.class.getSimpleName());
+                SearchActor.class.getSimpleName());
+        context().actorOf(Props.create(OrderActor.class, databaseService).withRouter(new RoundRobinPool(10)),
+                OrderActor.class.getSimpleName());
     }
 
 }
