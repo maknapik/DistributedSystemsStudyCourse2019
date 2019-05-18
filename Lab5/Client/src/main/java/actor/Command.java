@@ -3,5 +3,7 @@ package actor;
 public enum Command {
 
     PRICE,
-    ORDER
+    ORDER,
+    READ
+
 }

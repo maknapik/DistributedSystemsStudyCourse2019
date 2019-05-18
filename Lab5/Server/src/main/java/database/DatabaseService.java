@@ -1,6 +1,10 @@
 package database;
 
 import java.io.*;
+import java.net.URL;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -10,6 +14,7 @@ public class DatabaseService {
     private static final String FILENAME_1 = "/database/database1.mk";
     private static final String FILENAME_2 = "/database/database2.mk";
     private static final String ORDERS_FILENAME = "/database/orders.mk";
+    private static final String DATABASE_POSITIONS_PREFIX = "/database/position/";
 
     private Lock lock = new ReentrantLock();
 
@@ -32,6 +37,18 @@ public class DatabaseService {
         new OrderWriter(title).run();
 
         return true;
+    }
+
+    public List<String> readPosition(String title) throws InterruptedException {
+        List<String> content = new LinkedList<>();
+
+        PositionReader positionReader = new PositionReader(title, content);
+        Thread thread = new Thread(positionReader);
+
+        thread.start();
+        thread.join();
+
+        return content;
     }
 
     private class DatabaseReader implements Runnable {
@@ -86,6 +103,42 @@ public class DatabaseService {
             } finally {
                 lock.unlock();
             }
+        }
+
+    }
+
+    private class PositionReader implements Runnable {
+
+        private String title;
+        private List<String> content;
+
+        PositionReader(String title, List<String> content) {
+            this.title = title;
+            this.content = content;
+        }
+
+        @Override
+        public void run() {
+            try {
+                BufferedReader bufferedReader = new BufferedReader(new FileReader(getFilePath(title)));
+
+                String line;
+
+                while ((line = bufferedReader.readLine()) != null) {
+                    content.add(line);
+                }
+
+                bufferedReader.close();
+            } catch (IOException e) {
+                content.add("Position not found");
+            }
+        }
+
+        private String getFilePath(String title) throws FileNotFoundException {
+            return String.valueOf(Optional.ofNullable(
+                    DatabaseService.class.getResource(DATABASE_POSITIONS_PREFIX + title + ".mkp"))
+                    .map(URL::getFile)
+                    .orElseThrow(FileNotFoundException::new));
         }
 
     }

@@ -1,13 +1,31 @@
 package actor;
 
 import akka.actor.AbstractActor;
+import akka.actor.OneForOneStrategy;
 import akka.actor.Props;
+import akka.actor.SupervisorStrategy;
+import akka.japi.pf.DeciderBuilder;
 import akka.routing.RoundRobinPool;
 import database.DatabaseService;
 import model.OrderRequest;
+import model.ReadRequest;
 import model.SearchRequest;
+import scala.concurrent.duration.Duration;
+
+import java.io.FileNotFoundException;
+
+import static akka.actor.SupervisorStrategy.restart;
+import static akka.actor.SupervisorStrategy.resume;
 
 public class ServerActor extends AbstractActor {
+
+    private static final SupervisorStrategy supervisorStrategy = new OneForOneStrategy(10,
+            Duration.create("60 " + "seconds"),
+            DeciderBuilder
+                    .match(FileNotFoundException.class, e -> resume())
+                    .match(NullPointerException.class, e -> restart())
+                    .matchAny(e -> restart())
+                    .build());
 
     private DatabaseService databaseService;
 
@@ -17,20 +35,14 @@ public class ServerActor extends AbstractActor {
 
     @Override
     public Receive createReceive() {
-        return receiveBuilder().match(String.class, line -> {
-            String[] parameters = line.split(" ");
-            Command command = Command.valueOf(parameters[0].toUpperCase());
-
-            switch (command) {
-                case HEALTH:
-                    System.out.println(String.format("Server's system path: %s", getSelf().path()));
-            }
-        }).match(SearchRequest.class, searchRequest -> {
+        return receiveBuilder().match(SearchRequest.class, searchRequest -> {
             getContext().child(SearchActor.class.getSimpleName()).get().tell(searchRequest, getSender());
         }).match(OrderRequest.class, orderRequest -> {
             getContext().child(OrderActor.class.getSimpleName()).get().tell(orderRequest, getSender());
+        }).match(ReadRequest.class, readRequest -> {
+            getContext().child(ReadActor.class.getSimpleName()).get().tell(readRequest, getSender());
         }).matchAny(object -> {
-            System.out.println("Any");
+            System.out.println("Unknown request");
         }).build();
     }
 
@@ -40,6 +52,13 @@ public class ServerActor extends AbstractActor {
                 SearchActor.class.getSimpleName());
         context().actorOf(Props.create(OrderActor.class, databaseService).withRouter(new RoundRobinPool(10)),
                 OrderActor.class.getSimpleName());
+        context().actorOf(Props.create(ReadActor.class, databaseService).withRouter(new RoundRobinPool(10)),
+                ReadActor.class.getSimpleName());
+    }
+
+    @Override
+    public SupervisorStrategy supervisorStrategy() {
+        return supervisorStrategy;
     }
 
 }

@@ -15,9 +15,7 @@ public class Server {
 
     private void run() {
         final ActorSystem actorSystem = ActorSystem.create("ServerSystem", ConfigFactory.load());
-        final ActorRef server = actorSystem.actorOf(Props.create(ServerActor.class, databaseService), "Server");
-
-        server.tell("health", ActorRef.noSender());
+        actorSystem.actorOf(Props.create(ServerActor.class, databaseService), "Server");
     }
 
     public static void main(String[] args) {
