@@ -23,7 +23,6 @@ public class ServerActor extends AbstractActor {
             Duration.create("60 " + "seconds"),
             DeciderBuilder
                     .match(FileNotFoundException.class, e -> resume())
-                    .match(NullPointerException.class, e -> restart())
                     .matchAny(e -> restart())
                     .build());
 
