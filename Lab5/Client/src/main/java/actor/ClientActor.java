@@ -44,6 +44,8 @@ public class ClientActor extends AbstractActor {
                         }
                     } catch (IllegalArgumentException e) {
                         System.out.println("Unknown command");
+                    } catch (ArrayIndexOutOfBoundsException e) {
+                        System.out.println("Lack of parameters");
                     }
 
                 })
