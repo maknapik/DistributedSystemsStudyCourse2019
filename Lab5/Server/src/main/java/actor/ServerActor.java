@@ -47,11 +47,11 @@ public class ServerActor extends AbstractActor {
 
     @Override
     public void preStart() {
-        context().actorOf(Props.create(SearchActor.class, databaseService).withRouter(new RoundRobinPool(10)),
+        context().actorOf(Props.create(SearchActor.class, new DatabaseService()).withRouter(new RoundRobinPool(10)),
                 SearchActor.class.getSimpleName());
         context().actorOf(Props.create(OrderActor.class, databaseService).withRouter(new RoundRobinPool(10)),
                 OrderActor.class.getSimpleName());
-        context().actorOf(Props.create(ReadActor.class, databaseService).withRouter(new RoundRobinPool(10)),
+        context().actorOf(Props.create(ReadActor.class, new DatabaseService()).withRouter(new RoundRobinPool(10)),
                 ReadActor.class.getSimpleName());
     }
 
